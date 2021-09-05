@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Laby</title>
+
+  <!--*Bootstrap style-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <h1>Laby</h1>
+  <h2>Pour jouer (Z: monter Q: reculer S:descendre D:avancer)</h2>
+  <h3>Bienvenue a vous</h3>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm">
+        Nombre de ligne :
+        <select id="dropdownrow" name="dropdown" onchange="">
+          <option value="11">10</option>
+          <option value="31">30</option>
+          <option value="61">60</option>
+          <option value="101">100</option>
+          <option value="201">200</option>
+        </select>
+
+      </div>
+      <div class="col-sm">
+        Nombre de colonne :
+        <select id="dropdowncol" name="dropdown" onchange="">
+          <option value="11">10</option>
+          <option value="31">30</option>
+          <option value="61">60</option>
+          <option value="101">100</option>
+          <option value="151">150</option>
+          <option value="251">250</option>
+          <option value="401">400</option>
+        </select>
+
+      </div>
+      <div class="col-sm">
+        Taille case :
+        <select id="dropdownpixel" name="dropdown" onchange="">
+          <option value="1">1</option>
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="12">12</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+
+      <div class="form-check col-sm">
+        <input type="checkbox" class="form-check-input" id="autoplay">
+        <label class="form-check-label" for="exampleCheck1">Auto-play</label>
+      </div>
+
+      <div class="col-sm">
+        <button onclick="">Try it</button>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+  <table>
+
+  </table>
+
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="app.js" charset="utf-8"></script>
+
+</html>

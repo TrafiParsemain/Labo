@@ -1,0 +1,44 @@
+
+
+
+table{
+  margin: 10px 10px 0 10px;
+}
+
+
+.case{
+  background-color: black ;
+}
+
+.vide{
+  background-color: white ;
+}
+
+.ferme{
+  background-color: red ;
+}
+
+.bordure{
+  background-color: green ;
+}
+
+.probe{
+
+}
+
+.track{
+
+}
+
+.passed{
+  
+  background-color: orange;
+}
+
+.player{
+  background-color: green ;
+}
+
+.end{
+  background-color: red ;
+}

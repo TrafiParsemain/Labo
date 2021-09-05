@@ -1,0 +1,227 @@
+
+'Version 1.2
+    'Lorsqu'on créer une gallerie si on s'est placé dans un chemin typé 2
+    'On a désormais le droit de parcourir les chemin typé 2 pour tenter de creuser ailler
+    'Empeche beaucoup le blocage lié au chemin typé 2 qui ne pouvait pas etre emprunté lors de la création d'une nouvelle gallerie
+    'En effet on etait obligé de tomber a coté d'un chemin fermé pour pouvoir le creusé
+'Version 1.3
+    'Lorsqu'on parcours le chemin on va tout droit jusqua qu on ne puisse plus
+    'On va plus vite sur des zone utiles
+    'PROBLEME trop de ligne droite dans le labyrinthe !
+'Version 1.5
+    'Remise a jour de l'aléatoire correctement réparti
+
+''''''PREMIER CHEMIN''''''''
+
+compteur_tentative = 0
+      
+    fin_du_chemin = False
+    While Not fin_du_chemin
+        mvt = Rnd * 4
+        If mvt < 1 And est_ferme(i, j + 2) Then
+            Cells(i, j + 1).Clear
+            j = j + 2
+            t(i, j) = 2
+        ElseIf mvt < 2 And est_ferme(i, j - 2) Then
+            Cells(i, j - 1).Clear
+            j = j - 2
+            t(i, j) = 2
+        ElseIf mvt < 3 And est_ferme(i + 2, j) Then
+            Cells(i + 1, j).Clear
+            i = i + 2
+            t(i, j) = 2
+        ElseIf mvt < 4 And est_ferme(i - 2, j) Then
+            Cells(i - 1, j).Clear
+            i = i - 2
+            t(i, j) = 2
+        End If
+        
+        compteur_tentative = compteur_tentative + 1
+        If compteur_tentative = 1000 Then fin_du_chemin = True
+    Wend
+
+
+
+
+ While il_ya_des_ferme
+        
+        il_ya_des_ferme = False
+        For i = 2 To 32
+            For j = 2 To 77
+                If est_ferme(i, j) Then
+                    'i_go = i
+                    'j_go = j
+                    il_ya_des_ferme = True
+                    Exit For
+                End If
+            Next
+            If il_ya_des_ferme Then Exit For
+        Next
+        i_go = i ' premier ferme
+        j_go = j
+        If il_ya_des_ferme Then
+        
+        'TODO TODO TODO
+        'NE PRENDRE QUE LES POSSIBLE A LA BASE !!!!!
+        'La tentative de placement prend pas en compte les murs pété
+        'very grave si décalé !!!!!!
+            place = False
+            test_place = 0
+            While Not (place) And test_place < 500
+                j = Rnd * 75 + 2 'on essaye pas les bord pour les bord
+                i = Rnd * 30 + 2
+                test_place = test_place + 1
+                 If t(i, j) = 2 Then place = True
+            Wend
+''''''''''''''''''''''''''''''''''''''''''''PARTIR D UN FERME '''''''''''''''''''''''''''''''''''''''''''''''''''
+            If Not place Then
+            j = j_go
+            i = i_go
+                compteur_tentative = 0
+                fin_du_chemin = False
+    
+                While Not fin_du_chemin
+    
+                    raccord_chemin = False
+                    
+                    mvt = Rnd * 4
+    
+                    If mvt < 1 Then
+                        If est_ferme(i, j + 2) Then
+                            Cells(i, j + 1).Clear
+                            j = j + 2
+                            t(i, j) = 2
+                        ElseIf est_prenable(i, j + 2) Then
+                            Cells(i, j + 1).Clear
+                            j = j + 2
+                            t(i, j) = 2
+                            raccord_chemin = True
+                        End If
+                        
+                    ElseIf mvt < 2 Then
+                        If est_ferme(i, j - 2) Then
+                            Cells(i, j - 1).Clear
+                            j = j - 2
+                            t(i, j) = 2
+                        ElseIf est_prenable(i, j - 2) Then
+                            Cells(i, j - 1).Clear
+                            j = j - 2
+                            t(i, j) = 2
+                            raccord_chemin = True
+                        End If
+                        
+                    ElseIf mvt < 3 Then
+                        If est_ferme(i + 2, j) Then
+                            Cells(i + 1, j).Clear
+                            i = i + 2
+                            t(i, j) = 2
+                        ElseIf est_prenable(i + 2, j) Then
+                            Cells(i + 1, j).Clear
+                            i = i + 2
+                            t(i, j) = 2
+                            raccord_chemin = True
+                        End If
+                        
+                    ElseIf mvt < 4 Then
+                        If est_ferme(i - 2, j) Then
+                            Cells(i - 1, j).Clear
+                            i = i - 2
+                            t(i, j) = 2
+                        ElseIf est_prenable(i - 2, j) Then
+                            Cells(i - 1, j).Clear
+                            i = i - 2
+                            t(i, j) = 2
+                            raccord_chemin = True
+                        End If
+                        
+                    End If
+                    compteur_tentative = compteur_tentative + 1
+                    If compteur_tentative = 100 Then fin_du_chemin = True
+                    If raccord_chemin Then fin_du_chemin = True
+                Wend
+''''''''''''''''''''''''''''''''''''''''''''PARTIR DU CHMEIN '''''''''''''''''''''''''''''''''''''''''''''''''''
+            Else 'place
+                
+                'on se place a coté d'un  ferme
+                While Not a_un_voisin_ferme(i, j)
+                    If rnd1 > 0.5 Then
+                        If (i_go < i) Then
+                            i = i - 2
+                        ElseIf i_go > i Then
+                            i = i + 2
+                        ElseIf j_go < j Then
+                            j = j - 2
+                        ElseIf j_go > j Then
+                            j = j + 2
+                        End If
+                    Else
+                        If (j_go < j) Then
+                            j = j - 2
+                        ElseIf j_go > j Then
+                            j = j + 2
+                        ElseIf i_go < i Then
+                            i = i - 2
+                        ElseIf i_go > i Then
+                            i = i + 2
+                        End If
+                    End If
+                Wend
+            
+                compteur_tentative = 0
+                fin_du_chemin = False
+                While Not fin_du_chemin
+                    
+                     mvt = Rnd * 4
+                    
+                    If mvt < 1 Then
+                        If est_ferme(i, j + 2) Then 'Il est ferme tu creuse
+                            Cells(i, j + 1).Clear
+                            j = j + 2
+                            t(i, j) = 2
+                        'ElseIf ne_sort_pas_des_limites_2(i, j + 2) Then 'sinon si il sort pas des limites
+                           ' If t(i, j + 2) = 2 Then
+                            '    j = j + 2
+                            'End If
+                        End If
+                        
+                    ElseIf mvt < 2 Then
+                        If est_ferme(i, j - 2) Then
+                            Cells(i, j - 1).Clear
+                            j = j - 2
+                            t(i, j) = 2
+                        'ElseIf ne_sort_pas_des_limites_2(i, j - 2) Then
+                            'If t(i, j - 2) = 2 Then
+                            '    j = j - 2
+                           ' End If
+                        End If
+                        
+                    ElseIf mvt < 3 Then
+                        If est_ferme(i + 2, j) Then
+                            Cells(i + 1, j).Clear
+                            i = i + 2
+                            t(i, j) = 2
+                        'ElseIf ne_sort_pas_des_limites_2(i + 2, j) Then
+                           ' If t(i + 2, j) = 2 Then
+                            '    i = i + 2
+                            'End If
+                        End If
+                        
+                    ElseIf mvt < 4 Then
+                        If est_ferme(i - 2, j) Then
+                            Cells(i - 1, j).Clear
+                            i = i - 2
+                            t(i, j) = 2
+                        'ElseIf ne_sort_pas_des_limites_2(i - 2, j) Then
+                           'If t(i - 2, j) = 2 Then
+                            '    i = i - 2
+                            'End If
+                        End If
+                        
+                    End If
+                    
+                    compteur_tentative = compteur_tentative + 1
+                    If compteur_tentative = 100 Then fin_du_chemin = True
+                Wend
+            End If
+        End If
+    Wend
