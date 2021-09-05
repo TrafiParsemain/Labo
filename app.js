@@ -1,5 +1,5 @@
-let sizeCase = 10;
-let cols = 71;
+let sizeCase = 12;
+let cols = 61;
 let lines = 31;
 let randomcolor = false;
 
@@ -19,7 +19,7 @@ let endPos = {
   c: 0
 };
 
-let modeAuto = false ;
+let modeAuto = true ;
 const debug = false;
 
 ////////////////// CLASS CASE AND GLOBAL FUNCTION ///////////////
